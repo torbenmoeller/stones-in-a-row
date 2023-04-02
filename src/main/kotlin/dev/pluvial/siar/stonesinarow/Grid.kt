@@ -2,19 +2,24 @@ package dev.pluvial.siar.stonesinarow
 
 class Grid {
 
-    var grid = Array(7) { arrayOfNulls<Color>(6) }
+    /**
+     * 7 columns, 6 rows
+     * array of columns, each column is an array of colors
+     */
+    private var grid = Array(7) { arrayOfNulls<Color>(6) }
 
     /**
      * drop Token into column
      */
-    fun dropTokenIntoColumn(column: Int, token: Color) {
+    fun dropTokenIntoColumn(column: Int, token: Color): Int {
         isColumnFull(column)
         for (row in 0..5) {
             if (grid[column][row] == null) {
                 grid[column][row] = token
-                break
+                return row
             }
         }
+        throw RuntimeException("Column is full")
     }
 
     fun isColumnFull(column: Int): Boolean {
@@ -23,6 +28,14 @@ class Grid {
 
     fun getCell(column: Int, row: Int): Color? {
         return grid[column][row]
+    }
+
+    fun getHeight(): Int {
+        return grid[0].size
+    }
+
+    fun getWidth(): Int {
+        return grid.size
     }
 
 }

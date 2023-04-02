@@ -1,6 +1,6 @@
 package dev.pluvial.siar.stonesinarow
 
-enum class Player {
-    PLAYER_ONE,
-    PLAYER_TWO
-}
+data class Player (
+    val name: String,
+    val type: PlayerType,
+    val color: Color)
