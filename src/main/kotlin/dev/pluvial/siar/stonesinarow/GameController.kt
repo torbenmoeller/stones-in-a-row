@@ -1,30 +1,32 @@
 package dev.pluvial.siar.stonesinarow
 
+import dev.pluvial.siar.stonesinarow.session.SessionService
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RestController
+import java.util.UUID
 
 @RestController
-class GameController {
-
-    val games : HashMap<String, Game> = HashMap()
+class GameController(val sessionService: SessionService) {
 
     @PostMapping("/{uuid}/{column}")
-    fun makeMove(@PathVariable uuid: String,
+    fun makeMove(@PathVariable uuid: UUID,
                  @PathVariable column: Int): String {
-        val game = findOrCrateGame(uuid)
+        val game = findOrCreateGame(uuid)
         if(game.gameState != GameState.IN_PROGRESS) {
             return "Game is over. Winner:" + game.winner?.name
         }
         game.play(column)
+        updateSession(uuid, game)
         return printGrid(game.grid)
     }
 
-    private fun findOrCrateGame(uuid: String): Game {
-        if (games[uuid] == null) {
-            games[uuid] = Game()
-        }
-        return games.getValue(uuid)
+    private fun findOrCreateGame(uuid: UUID): Game {
+        return sessionService.getSession(uuid)
+    }
+
+    private fun updateSession(uuid: UUID, game:Game ) {
+        sessionService.updateSession(uuid, game)
     }
 
 }
