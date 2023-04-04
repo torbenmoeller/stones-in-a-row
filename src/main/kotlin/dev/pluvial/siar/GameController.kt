@@ -1,6 +1,6 @@
-package dev.pluvial.siar.stonesinarow
+package dev.pluvial.siar
 
-import dev.pluvial.siar.stonesinarow.session.SessionService
+import dev.pluvial.siar.session.SessionService
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RestController

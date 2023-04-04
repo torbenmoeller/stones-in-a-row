@@ -1,6 +1,6 @@
-package dev.pluvial.siar.stonesinarow.session
+package dev.pluvial.siar.session
 
-import dev.pluvial.siar.stonesinarow.Game
+import dev.pluvial.siar.Game
 import org.springframework.stereotype.Service
 import java.util.*
 

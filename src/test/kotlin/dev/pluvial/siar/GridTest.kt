@@ -1,4 +1,4 @@
-package dev.pluvial.siar.stonesinarow
+package dev.pluvial.siar
 
 fun main(args: Array<String>) {
     val g = Grid()

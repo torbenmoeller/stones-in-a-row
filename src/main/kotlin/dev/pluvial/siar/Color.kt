@@ -1,4 +1,4 @@
-package dev.pluvial.siar.stonesinarow
+package dev.pluvial.siar
 
 enum class Color(val short: String) {
     YELLOW("Y"),

@@ -1,4 +1,4 @@
-package dev.pluvial.siar.stonesinarow
+package dev.pluvial.siar
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

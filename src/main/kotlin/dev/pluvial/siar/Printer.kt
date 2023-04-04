@@ -1,4 +1,4 @@
-package dev.pluvial.siar.stonesinarow
+package dev.pluvial.siar
 
 fun printGrid(grid: Grid) :String {
     val sb = StringBuilder()

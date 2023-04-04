@@ -1,4 +1,4 @@
-package dev.pluvial.siar.stonesinarow
+package dev.pluvial.siar
 
 class Game(
     val playerOne: Player = Player("Player 1", PlayerType.HUMAN, Color.RED),

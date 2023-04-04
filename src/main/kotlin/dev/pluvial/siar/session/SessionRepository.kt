@@ -1,4 +1,4 @@
-package dev.pluvial.siar.stonesinarow.session
+package dev.pluvial.siar.session
 
 import org.springframework.data.mongodb.repository.MongoRepository
 import java.util.*
