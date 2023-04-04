@@ -25,7 +25,7 @@ class GameController(val sessionService: SessionService) {
         return sessionService.getSession(uuid)
     }
 
-    private fun updateSession(uuid: UUID, game:Game ) {
+    private fun updateSession(uuid: UUID, game: Game) {
         sessionService.updateSession(uuid, game)
     }
 

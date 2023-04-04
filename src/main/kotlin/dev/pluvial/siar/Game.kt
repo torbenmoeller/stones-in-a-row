@@ -1,13 +1,17 @@
 package dev.pluvial.siar
 
+import dev.pluvial.siar.player.Player
+import dev.pluvial.siar.player.PlayerType
+
 class Game(
     val playerOne: Player = Player("Player 1", PlayerType.HUMAN, Color.RED),
     val playerTwo: Player = Player("Player 2", PlayerType.BOT, Color.YELLOW),
-    var turnOfPlayer: Player = playerOne,
-    val grid: Grid = Grid(),
-    val winLength: Int = 4,
-    var gameState: GameState = GameState.IN_PROGRESS
+    val winLength: Int = 4
 ) {
+
+    val grid: Grid = Grid()
+    private var turnOfPlayer: Player = playerOne
+    var gameState: GameState = GameState.IN_PROGRESS
     var winner: Player? = null
 
     fun play(column: Int) {

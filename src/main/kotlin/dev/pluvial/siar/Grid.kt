@@ -1,15 +1,18 @@
 package dev.pluvial.siar
 
-class Grid {
+class Grid(
+    private val width: Int=7,
+    private val height: Int=6
+) {
 
     /**
      * 7 columns, 6 rows
      * array of columns, each column is an array of colors
      */
-    private var grid = Array(7) { arrayOfNulls<Color>(6) }
+    private var grid = Array(width) { arrayOfNulls<Color>(height) }
 
     /**
-     * drop Token into column
+     * Drop token into column
      */
     fun dropTokenIntoColumn(column: Int, token: Color): Int {
         isColumnFull(column)
@@ -22,6 +25,10 @@ class Grid {
         throw RuntimeException("Column is full")
     }
 
+    /**
+     * Checks the top spot of the column is empty.
+     * Returns true if the column is full.
+     */
     fun isColumnFull(column: Int): Boolean {
         return grid[column][0] != null
     }
@@ -31,11 +38,11 @@ class Grid {
     }
 
     fun getHeight(): Int {
-        return grid[0].size
+        return height
     }
 
     fun getWidth(): Int {
-        return grid.size
+        return width
     }
 
 }

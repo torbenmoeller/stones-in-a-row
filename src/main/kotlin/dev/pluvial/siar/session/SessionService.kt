@@ -7,13 +7,14 @@ import java.util.*
 @Service
 class SessionService(val sessionRepository: SessionRepository) {
 
+    /**
+     * Gets the game session for the given UUID
+     * or creates a new one if it doesn't exist.
+     */
     fun getSession(uuid: UUID): Game {
         val session = sessionRepository.findById(uuid)
-        return if(session.isPresent) {
-            session.get().game
-        } else {
-            Game()
-        }
+        return session.map { x -> x.game }
+            .orElse(Game())
     }
 
     fun updateSession(uuid: UUID, game: Game) {
