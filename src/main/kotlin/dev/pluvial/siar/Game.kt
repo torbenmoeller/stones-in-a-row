@@ -4,8 +4,8 @@ import dev.pluvial.siar.player.Player
 import dev.pluvial.siar.player.PlayerType
 
 class Game(
-    val playerOne: Player = Player("Player 1", PlayerType.HUMAN, Color.RED),
-    val playerTwo: Player = Player("Player 2", PlayerType.BOT, Color.YELLOW),
+    val playerOne: Player = Player("Player 1", PlayerType.HUMAN, DiscColor.RED),
+    val playerTwo: Player = Player("Player 2", PlayerType.BOT, DiscColor.YELLOW),
     val winLength: Int = 4
 ) {
 
@@ -14,8 +14,8 @@ class Game(
     var gameState: GameState = GameState.IN_PROGRESS
     var winner: Player? = null
 
-    fun play(column: Int) {
-        val row = grid.dropTokenIntoColumn(column, turnOfPlayer.color)
+    fun dropToken(column: Int) {
+        val row = grid.dropTokenIntoColumn(column, turnOfPlayer.discColor)
         val isGameWon = checkWin(column, row)
         if (isGameWon) {
             println("Game won by ${turnOfPlayer.name}")
@@ -31,7 +31,7 @@ class Game(
     }
 
     private fun checkWin(column: Int, row: Int): Boolean {
-        val playerColor = turnOfPlayer.color
+        val playerColor = turnOfPlayer.discColor
         // Check for horizontal win
         val isHorizontalWin = checkHorizontalWin(row, playerColor)
         if (isHorizontalWin) {
@@ -60,10 +60,10 @@ class Game(
      * Counts the number of tokens of the same color in a row.
      * Returns true if the number of tokens surpasses the win length.
      */
-    private fun checkHorizontalWin(row: Int, playerColor: Color): Boolean {
+    private fun checkHorizontalWin(row: Int, playerDiscColor: DiscColor): Boolean {
         var count = 0
         for (c in 0 until grid.getWidth()) {
-            if (grid.getCell(c, row) == playerColor) {
+            if (grid.getCell(c, row) == playerDiscColor) {
                 count++
                 if (count == winLength) {
                     return true
@@ -79,10 +79,10 @@ class Game(
      * Counts the number of tokens of the same color in a column.
      * Returns true if the number of tokens surpasses the win length.
      */
-    private fun checkVerticalWin(column: Int, playerColor: Color): Boolean {
+    private fun checkVerticalWin(column: Int, playerDiscColor: DiscColor): Boolean {
         var count = 0
         for (r in 0 until grid.getHeight()) {
-            if (grid.getCell(column, r) == playerColor) {
+            if (grid.getCell(column, r) == playerDiscColor) {
                 count++
                 if (count == winLength) {
                     return true
@@ -97,7 +97,7 @@ class Game(
     private fun checkDiagonalDownRightWin(
         row: Int,
         column: Int,
-        playerColor: Color
+        playerDiscColor: DiscColor
     ): Boolean {
         var count = 0
         var r = row
@@ -107,7 +107,7 @@ class Game(
             c--
         }
         while (r < grid.getHeight() && c < grid.getWidth()) {
-            if (grid.getCell(c, r) == playerColor) {
+            if (grid.getCell(c, r) == playerDiscColor) {
                 count++
                 if (count == winLength) {
                     return true
@@ -124,7 +124,7 @@ class Game(
     private fun checkDiagonalDownLeftWin(
         row: Int,
         column: Int,
-        playerColor: Color
+        playerDiscColor: DiscColor
     ): Boolean {
         var count = 0
         var r = row
@@ -134,7 +134,7 @@ class Game(
             c++
         }
         while (r < grid.getHeight() && c >= 0) {
-            if (grid.getCell(c, r) == playerColor) {
+            if (grid.getCell(c, r) == playerDiscColor) {
                 count++
                 if (count == winLength) {
                     return true

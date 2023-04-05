@@ -10,13 +10,13 @@ import java.util.UUID
 class GameController(val sessionService: SessionService) {
 
     @PostMapping("/{uuid}/{column}")
-    fun makeMove(@PathVariable uuid: UUID,
+    fun dropToken(@PathVariable uuid: UUID,
                  @PathVariable column: Int): String {
         val game = findOrCreateGame(uuid)
         if(game.gameState != GameState.IN_PROGRESS) {
             return "Game is over. Winner:" + game.winner?.name
         }
-        game.play(column)
+        game.dropToken(column)
         updateSession(uuid, game)
         return printGrid(game.grid)
     }

@@ -9,12 +9,12 @@ class Grid(
      * 7 columns, 6 rows
      * array of columns, each column is an array of colors
      */
-    private var grid = Array(width) { arrayOfNulls<Color>(height) }
+    private var grid = Array(width) { arrayOfNulls<DiscColor>(height) }
 
     /**
      * Drop token into column
      */
-    fun dropTokenIntoColumn(column: Int, token: Color): Int {
+    fun dropTokenIntoColumn(column: Int, token: DiscColor): Int {
         isColumnFull(column)
         for (row in 0..5) {
             if (grid[column][row] == null) {
@@ -33,7 +33,7 @@ class Grid(
         return grid[column][0] != null
     }
 
-    fun getCell(column: Int, row: Int): Color? {
+    fun getCell(column: Int, row: Int): DiscColor? {
         return grid[column][row]
     }
 
