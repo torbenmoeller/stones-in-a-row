@@ -1,4 +1,6 @@
-package dev.pluvial.siar
+package dev.pluvial.siar.session
+
+import dev.pluvial.siar.session.DiscColor
 
 class Grid(
     private val width: Int=7,

@@ -1,5 +1,7 @@
 package dev.pluvial.siar
 
+import dev.pluvial.siar.session.Grid
+
 fun printGrid(grid: Grid) :String {
     val sb = StringBuilder()
     for (row in 5 downTo 0) {
