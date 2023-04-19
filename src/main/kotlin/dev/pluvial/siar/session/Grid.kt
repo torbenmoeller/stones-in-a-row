@@ -1,7 +1,5 @@
 package dev.pluvial.siar.session
 
-import dev.pluvial.siar.session.DiscColor
-
 class Grid(
     private val width: Int=7,
     private val height: Int=6

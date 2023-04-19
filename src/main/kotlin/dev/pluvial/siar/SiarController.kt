@@ -8,14 +8,18 @@ import dev.pluvial.siar.player.PlayerType
 import dev.pluvial.siar.session.InitGameSessionDto
 import dev.pluvial.siar.session.SessionService
 import org.springframework.web.bind.annotation.*
+import java.time.Instant
 import java.util.*
+
+private const val SESSION_DOES_NOT_EXIST = "Session does not exist"
 
 @RestController
 class SiarController(val sessionService: SessionService) {
 
-    @PostMapping("/{sessionid}/init")
-    fun initGameSession(@PathVariable sessionid: UUID, @RequestBody data: InitGameSessionDto) {
-        val session = sessionService.getSession(sessionid)
+    @PostMapping("/{sessionId}/init")
+    fun initGameSession(@PathVariable sessionId: UUID,
+                        @RequestBody data: InitGameSessionDto) {
+        val session = sessionService.getSession(sessionId)
         if(session.isPresent) {
             throw IllegalStateException("Session already exists")
         }
@@ -25,15 +29,15 @@ class SiarController(val sessionService: SessionService) {
             winningLength = data.winningLength)
         val player1 = Player(data.player1, "Player 1", PlayerType.HUMAN, DiscColor.RED)
         val player2 = Player(data.player2, "Player 2", PlayerType.BOT, DiscColor.YELLOW)
-        sessionService.createSession(sessionid, player1, player2, rules)
+        sessionService.createSession(sessionId, player1, player2, rules)
     }
 
-    @PostMapping("/{sessionid}/column/{column}")
-    fun dropToken(@PathVariable sessionid: UUID,
+    @PostMapping("/{sessionId}/column/{column}")
+    fun dropToken(@PathVariable sessionId: UUID,
                  @PathVariable column: Int): String {
-        val sessionOptional = sessionService.getSession(sessionid)
+        val sessionOptional = sessionService.getSession(sessionId)
         if(sessionOptional.isEmpty) {
-            throw IllegalStateException("Session does not exist")
+            throw IllegalStateException(SESSION_DOES_NOT_EXIST)
         }
         val session = sessionOptional.get()
         if(session.gameState != GameState.IN_PROGRESS) {
@@ -44,11 +48,11 @@ class SiarController(val sessionService: SessionService) {
         return printGrid(session.grid)
     }
 
-    @GetMapping("/{sessionid}")
-    fun getSession(@PathVariable sessionid: UUID): String {
-        val sessionOptional = sessionService.getSession(sessionid)
+    @GetMapping("/{sessionId}")
+    fun getSession(@PathVariable sessionId: UUID): String {
+        val sessionOptional = sessionService.getSession(sessionId)
         if(sessionOptional.isEmpty) {
-            throw IllegalStateException("Session does not exist")
+            throw IllegalStateException(SESSION_DOES_NOT_EXIST)
         }
         val session = sessionOptional.get()
         return printGrid(session.grid)
