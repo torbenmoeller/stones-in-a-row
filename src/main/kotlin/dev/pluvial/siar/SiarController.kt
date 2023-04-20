@@ -63,9 +63,9 @@ class SiarController(val sessionService: SessionService) {
         TODO("Not yet implemented")
     }
 
-    @DeleteMapping("/{sessionid}")
-    fun deleteSessions(@PathVariable sessionid: UUID) {
-        sessionService.deleteSession(sessionid)
+    @DeleteMapping("/{sessionId}")
+    fun deleteSessions(@PathVariable sessionId: UUID) {
+        sessionService.deleteSession(sessionId)
     }
 
 }
