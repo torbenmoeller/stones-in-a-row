@@ -1,12 +1,8 @@
 package dev.pluvial.siar
 
-import dev.pluvial.siar.session.DiscColor
-import dev.pluvial.siar.session.Rules
-import dev.pluvial.siar.session.GameState
 import dev.pluvial.siar.player.Player
 import dev.pluvial.siar.player.PlayerType
-import dev.pluvial.siar.session.InitGameSessionDto
-import dev.pluvial.siar.session.SessionService
+import dev.pluvial.siar.session.*
 import org.springframework.web.bind.annotation.*
 import java.time.Instant
 import java.util.*
@@ -58,9 +54,20 @@ class SiarController(val sessionService: SessionService) {
         return printGrid(session.grid)
     }
 
-    @GetMapping("/{sessionid}/{timestamp}")
-    fun getSessionStateAtTimestampe(@PathVariable sessionid: UUID): String {
-        TODO("Not yet implemented")
+    @GetMapping("/{sessionId}/{timestamp}")
+    fun getSessionStateAtTimestamp(@PathVariable sessionId: UUID,
+                                   @PathVariable timestamp: Instant): String {
+        val sessionOptional = sessionService.getSession(sessionId)
+        if(sessionOptional.isEmpty) {
+            throw IllegalStateException(SESSION_DOES_NOT_EXIST)
+        }
+        val session = sessionOptional.get()
+        val mockSession = Session(session.id, session.playerOne, session.playerTwo, session.rules)
+        session.events.stream()
+            .filter { it.timestamp.isBefore(timestamp) }
+            .forEach { it.process(mockSession) }
+
+        return printGrid(mockSession.grid)
     }
 
     @DeleteMapping("/{sessionId}")

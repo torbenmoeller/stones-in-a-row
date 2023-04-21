@@ -1,6 +1,5 @@
 package dev.pluvial.siar.session
 
-import dev.pluvial.siar.Event
 import dev.pluvial.siar.player.Player
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
@@ -18,7 +17,7 @@ class Session (
     var winLength: Int = rules.winningLength
     var turnOfPlayer: Player = playerOne
     var gameState: GameState = GameState.IN_PROGRESS
-    var winner: Player? = null
+    var gameResult: GameResultEnum? = null
     var events: MutableList<Event> = ArrayList()
 
     fun dropToken(column: Int) {
@@ -28,14 +27,18 @@ class Session (
         if (isGameWon) {
             println("Game won by ${turnOfPlayer.name}")
             this.gameState = GameState.FINISHED
-            this.winner = turnOfPlayer
-            events.add(GameFinishedEvent())
+            if(playerOne == turnOfPlayer)
+                this.gameResult = GameResultEnum.PLAYER1_WON
+            else
+                this.gameResult = GameResultEnum.PLAYER2_WON
+            events.add(GameFinishedEvent(gameResult!!))
         }
         val isGameTie = isTie()
         if (isGameTie) {
-            println("Game is a tie")
+            println("Game is a draw")
             this.gameState = GameState.FINISHED
-            events.add(GameFinishedEvent())
+            this.gameResult = GameResultEnum.DRAW
+            events.add(GameFinishedEvent(gameResult!!))
         }
         nextTurn()
     }

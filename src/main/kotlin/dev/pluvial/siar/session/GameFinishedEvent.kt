@@ -1,9 +1,9 @@
 package dev.pluvial.siar.session
 
-import dev.pluvial.siar.Event
-
-class GameFinishedEvent : Event() {
-    override fun process() {
-        TODO("Not yet implemented")
+class GameFinishedEvent(var gameResult: GameResultEnum)
+    : Event() {
+    override fun process(session: Session) {
+        session.gameState = GameState.FINISHED
+        session.gameResult = gameResult
     }
 }
